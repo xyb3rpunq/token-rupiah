@@ -37,6 +37,8 @@ jobs:
         with:
           node-version: '20'
       - run: node src/build.js
+      - name: Pastikan docs/ sudah sama dengan hasil build
+        run: git diff --exit-code -- docs || (echo "docs/ tertinggal — jalankan npm run build lalu commit" && exit 1)
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

@@ -1,11 +1,14 @@
 {
   "name": "token-rupiah",
   "version": "1.0.0",
+  "tanggalTerbit": "2026-09-08",
   "description": "Kalkulator biaya token LLM dalam Rupiah + simulasi kelayakan produk AI. Statis, dwibahasa, nol dependensi.",
   "type": "module",
   "private": true,
   "license": "MIT",
-  "engines": { "node": ">=20" },
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "test": "node --test test/*.test.js",
     "build": "node src/build.js",

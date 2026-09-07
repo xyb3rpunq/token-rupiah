@@ -16,6 +16,25 @@ const SRC = join(AKAR, 'src');
 const DOCS = join(AKAR, 'docs');
 
 export const BASIS = 'https://xyb3rpunq.github.io/token-rupiah';
+
+/**
+ * Tanggal terbit, dibaca dari package.json — bukan dari jam mesin.
+ *
+ * Build wajib deterministik: menjalankannya dua kali harus menghasilkan berkas
+ * yang identik bit demi bit, supaya pemeriksaan "docs/ sama dengan hasil build"
+ * di CI berarti sesuatu. Memakai new Date() membuatnya berubah tiap hari walau
+ * tidak ada yang disunting. Selain itu lastmod sitemap memang seharusnya
+ * menyatakan kapan ISINYA berubah, bukan kapan perintah build dijalankan.
+ */
+export function tanggalTerbit() {
+  const pkg = JSON.parse(readFileSync(join(AKAR, 'package.json'), 'utf8'));
+  const t = pkg.tanggalTerbit;
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(String(t))) {
+    throw new Error('package.json: tanggalTerbit hilang atau tidak berformat YYYY-MM-DD');
+  }
+  return t;
+}
+
 export const MESIN = Object.freeze(['hitung.js', 'harga.js', 'papan.js']);
 
 export function robots() {
@@ -37,7 +56,7 @@ function tulis(jalur, isi) {
 }
 
 function main() {
-  const tanggal = new Date().toISOString().slice(0, 10);
+  const tanggal = tanggalTerbit();
   const keluar = [];
 
   mkdirSync(join(DOCS, 'mesin'), { recursive: true });
