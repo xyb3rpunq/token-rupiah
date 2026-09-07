@@ -1,0 +1,78 @@
+/* Font di-host sendiri, bukan dari Google Fonts.
+   Alasannya: halaman ini mengklaim tidak melakukan permintaan jaringan keluar,
+   dan memuat font dari server pihak ketiga membuat klaim itu tidak benar —
+   setiap kunjungan mengirimkan alamat IP pengunjung ke sana. Berkas di bawah
+   subset latin saja; situs ini hanya berbahasa Indonesia dan Inggris.
+   Dibuat otomatis oleh scripts/selfhost_font.py. */
+@font-face{
+  font-family:'Chivo';
+  font-style:normal;
+  font-weight:500;
+  font-display:swap;
+  src:url('font/chivo-500-bc37bcda.woff2') format('woff2');
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,
+    U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face{
+  font-family:'Chivo';
+  font-style:normal;
+  font-weight:700;
+  font-display:swap;
+  src:url('font/chivo-700-bc37bcda.woff2') format('woff2');
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,
+    U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face{
+  font-family:'Chivo';
+  font-style:normal;
+  font-weight:900;
+  font-display:swap;
+  src:url('font/chivo-900-bc37bcda.woff2') format('woff2');
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,
+    U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face{
+  font-family:'Roboto Mono';
+  font-style:normal;
+  font-weight:400;
+  font-display:swap;
+  src:url('font/roboto-mono-400-ede7afbe.woff2') format('woff2');
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,
+    U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face{
+  font-family:'Roboto Mono';
+  font-style:normal;
+  font-weight:500;
+  font-display:swap;
+  src:url('font/roboto-mono-500-ede7afbe.woff2') format('woff2');
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,
+    U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face{
+  font-family:'Roboto Mono';
+  font-style:normal;
+  font-weight:700;
+  font-display:swap;
+  src:url('font/roboto-mono-700-ede7afbe.woff2') format('woff2');
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,
+    U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face{
+  font-family:'Spectral';
+  font-style:normal;
+  font-weight:400;
+  font-display:swap;
+  src:url('font/spectral-400-d4877aef.woff2') format('woff2');
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,
+    U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face{
+  font-family:'Spectral';
+  font-style:normal;
+  font-weight:500;
+  font-display:swap;
+  src:url('font/spectral-500-df844520.woff2') format('woff2');
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,
+    U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}

@@ -5,7 +5,7 @@
  * docs/mesin/ dan dimuat sebagai modul ES, jadi kode yang jalan di peramban
  * benar-benar berkas yang sama dengan yang diuji.
  */
-import { readFileSync, writeFileSync, mkdirSync, copyFileSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, copyFileSync, readdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { halaman } from './render.js';
@@ -62,6 +62,13 @@ function main() {
   mkdirSync(join(DOCS, 'mesin'), { recursive: true });
   for (const m of MESIN) copyFileSync(join(SRC, m), join(DOCS, 'mesin', m));
 
+  keluar.push(tulis('font.css', readFileSync(join(SRC, 'font.css'), 'utf8')));
+  // Berkas font disalin apa adanya — di-host sendiri supaya halaman ini benar-benar
+  // tidak melakukan permintaan jaringan keluar seperti yang diklaimnya.
+  mkdirSync(join(DOCS, 'font'), { recursive: true });
+  for (const f of readdirSync(join(SRC, 'font'))) {
+    copyFileSync(join(SRC, 'font', f), join(DOCS, 'font', f));
+  }
   keluar.push(tulis('gaya.css', readFileSync(join(SRC, 'gaya.css'), 'utf8')));
   keluar.push(tulis('app.js', readFileSync(join(SRC, 'app.js'), 'utf8')));
   for (const b of BAHASA) {

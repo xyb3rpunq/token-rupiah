@@ -74,7 +74,7 @@ token-rupiah/
 │   ├── render.js    perakit halaman
 │   ├── app.js       perekat UI — satu-satunya berkas yang menyentuh DOM
 │   └── build.js     rakit docs/
-└── test/            103 uji, nol dependensi
+└── test/            111 uji, nol dependensi
 ```
 
 Monte Carlo-nya memakai pembangkit acak berbenih (mulberry32), jadi hasil yang sama
@@ -86,10 +86,28 @@ Mesin yang jalan di peramban **bukan hasil bundling**: `hitung.js`, `harga.js`, 
 ## Menjalankan
 
 ```bash
-npm test          # 103 uji
+npm test          # 111 uji
 npm run build     # rakit docs/
 npm run periksa   # uji lalu build
 ```
+
+## Font di-host sendiri
+
+Halaman ini tidak melakukan **satu pun** permintaan jaringan keluar — termasuk untuk font.
+Berkas woff2 subset latin disimpan di repo ini dan dilayani dari domain yang sama.
+
+Itu bukan detail sepele: versi pertama memuat font dari Google Fonts sambil README-nya
+mengklaim "nol permintaan jaringan keluar". Klaim itu tidak benar — setiap kunjungan
+mengirimkan alamat IP pengunjung ke server pihak ketiga. `pdp-guard` menandainya sendiri
+saat dipindai ke situs ini (`transfer-luar-negeri`), dan ada uji yang sekarang menolak
+setiap sumber daya dari host luar supaya klaimnya tetap benar.
+
+## Header keamanan di host statis
+
+GitHub Pages tidak bisa menyetel header respons. Content-Security-Policy dan
+Referrer-Policy tetap berlaku lewat `<meta>` dan sudah dipasang; Strict-Transport-Security
+dan X-Content-Type-Options memang tidak bisa dari sana, dan itu dikatakan apa adanya
+alih-alih dipura-purakan.
 
 ## Lisensi
 

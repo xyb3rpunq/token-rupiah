@@ -86,6 +86,9 @@ export const KAMUS = Object.freeze({
     'catatan.rerata': 'Jangan pakai rata-rata sebagai dasar anggaran. Pemakaian pengguna nyata timpang: sebagian besar memakai sedikit, segelintir memakai sangat banyak. Angka yang perlu kamu siapkan adalah p90, bukan rata-rata.',
     'catatan.selfhost': 'Perbandingan self-host hanya menghitung sewa GPU-nya. Waktu orang yang mengurusnya, jam menganggur, percobaan yang gagal, dan biaya pindah tidak masuk hitungan — dan biasanya justru itu yang paling mahal.',
 
+    'privasi.judul': 'Privasi',
+    'privasi.kontak': 'Kirim surel',
+    'privasi.isi': 'Halaman ini tidak mengumpulkan apa pun. Tidak ada server yang menerima datamu, tidak ada analitik, tidak ada cookie, dan tidak ada satu pun permintaan jaringan keluar — font pun di-host di repo ini sendiri, bukan diambil dari server pihak ketiga. Semua yang kamu ketik tetap di perambanmu dan hilang saat tabnya ditutup. Karena tidak ada yang disimpan, tidak ada masa retensi dan tidak ada yang bisa diminta hapus. Kalau ada yang perlu ditanyakan atau diperbaiki, hubungi lewat tautan di bawah atau buka issue di repo.',
     'kaki.sumber': 'Kode sumber, tabel harga bertanggal, dan seluruh ujinya ada di repo. Nol dependensi, nol permintaan jaringan keluar, nol analitik.',
   }),
 
@@ -172,6 +175,9 @@ export const KAMUS = Object.freeze({
     'catatan.rerata': 'Do not budget on the average. Real usage is skewed: most people use a little, a handful use a great deal. The number to prepare for is p90, not the mean.',
     'catatan.selfhost': 'The self-host comparison only counts GPU rental. The people-hours to run it, idle time, failed experiments, and migration cost are all excluded — and they are usually the expensive part.',
 
+    'privasi.judul': 'Privacy',
+    'privasi.kontak': 'Send an email',
+    'privasi.isi': 'This page collects nothing. No server receives your data, no analytics, no cookies, and not a single outbound network request — even the fonts are hosted in this repository rather than fetched from a third party. Everything you type stays in your browser and is gone when the tab closes. Because nothing is stored, there is no retention period and nothing to request deletion of. If something needs asking or fixing, use the link below or open an issue on the repo.',
     'kaki.sumber': 'The source, the dated price table, and every test live in the repo. No dependencies, no outbound requests, no analytics.',
   }),
 });

@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; form-action 'none'; base-uri 'none'; frame-ancestors 'none'">
+<meta name="referrer" content="no-referrer">
 <title>Token Rupiah</title>
 <meta name="description" content="Kalkulator biaya token LLM dalam Rupiah plus simulasi kelayakan produk AI: margin, titik impas, dan kejutan tagihan bulan buruk.">
 <meta property="og:title" content="Token Rupiah">
@@ -10,9 +12,7 @@
 <link rel="alternate" hreflang="id" href="https://xyb3rpunq.github.io/token-rupiah/">
 <link rel="alternate" hreflang="en" href="https://xyb3rpunq.github.io/token-rupiah/en/">
 <link rel="alternate" hreflang="x-default" href="https://xyb3rpunq.github.io/token-rupiah/">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chivo:wght@500;700;900&family=Spectral:wght@400;500&family=Roboto+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="./font.css">
 <link rel="stylesheet" href="./gaya.css">
 </head>
 <body>
@@ -140,6 +140,12 @@
     <li>Tabel harga di halaman ini bertanggal. Kalau tanggalnya sudah lama, cek langsung ke halaman harga resminya sebelum mengambil keputusan bisnis.</li>
     <li>Perbandingan self-host hanya menghitung sewa GPU-nya. Waktu orang yang mengurusnya, jam menganggur, percobaan yang gagal, dan biaya pindah tidak masuk hitungan — dan biasanya justru itu yang paling mahal.</li>
   </ul>
+</section>
+
+<section id="privasi">
+  <h2>Privasi</h2>
+  <p>Halaman ini tidak mengumpulkan apa pun. Tidak ada server yang menerima datamu, tidak ada analitik, tidak ada cookie, dan tidak ada satu pun permintaan jaringan keluar — font pun di-host di repo ini sendiri, bukan diambil dari server pihak ketiga. Semua yang kamu ketik tetap di perambanmu dan hilang saat tabnya ditutup. Karena tidak ada yang disimpan, tidak ada masa retensi dan tidak ada yang bisa diminta hapus. Kalau ada yang perlu ditanyakan atau diperbaiki, hubungi lewat tautan di bawah atau buka issue di repo.</p>
+  <p><a href="mailto:hutajuludaniel126@gmail.com">Kirim surel: hutajuludaniel126@gmail.com</a></p>
 </section>
 
 <footer><p>Kode sumber, tabel harga bertanggal, dan seluruh ujinya ada di repo. Nol dependensi, nol permintaan jaringan keluar, nol analitik.</p></footer>

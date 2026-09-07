@@ -62,6 +62,8 @@ export function halaman(b, { basis = '', jalur = './', tanggal = '2026-09-07' } 
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; form-action 'none'; base-uri 'none'; frame-ancestors 'none'">
+<meta name="referrer" content="no-referrer">
 <title>${esc(t(b, 'meta.judul'))}</title>
 <meta name="description" content="${esc(t(b, 'meta.deskripsi'))}">
 <meta property="og:title" content="${esc(t(b, 'meta.judul'))}">
@@ -69,9 +71,7 @@ export function halaman(b, { basis = '', jalur = './', tanggal = '2026-09-07' } 
 <link rel="alternate" hreflang="id" href="${esc(basis)}/">
 <link rel="alternate" hreflang="en" href="${esc(basis)}/en/">
 <link rel="alternate" hreflang="x-default" href="${esc(basis)}/">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chivo:wght@500;700;900&family=Spectral:wght@400;500&family=Roboto+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="${esc(jalur)}font.css">
 <link rel="stylesheet" href="${esc(jalur)}gaya.css">
 </head>
 <body>
@@ -151,6 +151,12 @@ export function halaman(b, { basis = '', jalur = './', tanggal = '2026-09-07' } 
     <li>${esc(t(b, 'catatan.harga'))}</li>
     <li>${esc(t(b, 'catatan.selfhost'))}</li>
   </ul>
+</section>
+
+<section id="privasi">
+  <h2>${esc(t(b, 'privasi.judul'))}</h2>
+  <p>${esc(t(b, 'privasi.isi'))}</p>
+  <p><a href=\"mailto:hutajuludaniel126@gmail.com">${esc(t(b, 'privasi.kontak'))}: hutajuludaniel126@gmail.com</a></p>
 </section>
 
 <footer><p>${esc(t(b, 'kaki.sumber'))}</p></footer>
