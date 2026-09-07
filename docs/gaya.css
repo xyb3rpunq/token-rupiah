@@ -1,0 +1,125 @@
+/* token-rupiah — palet terminal keuangan: dasar netral condong biru, emas untuk
+   uang, hijau/merah hanya untuk untung dan rugi. Tidak ada warna jenuh lain. */
+:root{
+  --ground:#EEF1F5; --surface:#FFFFFF; --sunken:#E0E5EC; --garis:#CFD6E0; --garis-2:#B5BFCC;
+  --ink:#0E1319; --ink-2:#3B4756; --ink-3:#6B7889;
+  --emas:#8A6712; --emas-2:#A87F1C;
+  --laba:#0F5C3B; --rugi:#96271A;
+  --disp:"Chivo",system-ui,sans-serif;
+  --body:"Spectral",Georgia,serif;
+  --mono:"Roboto Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#0A0D12; --surface:#111721; --sunken:#18202C; --garis:#212B3A; --garis-2:#2F3C4F;
+    --ink:#E6ECF3; --ink-2:#AEBBCA; --ink-3:#7C8B9E;
+    --emas:#E0B441; --emas-2:#C79B2E;
+    --laba:#4FC08D; --rugi:#F0836F;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0A0D12; --surface:#111721; --sunken:#18202C; --garis:#212B3A; --garis-2:#2F3C4F;
+  --ink:#E6ECF3; --ink-2:#AEBBCA; --ink-3:#7C8B9E;
+  --emas:#E0B441; --emas-2:#C79B2E;
+  --laba:#4FC08D; --rugi:#F0836F;
+}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--body);
+  font-size:16.5px;line-height:1.6;-webkit-font-smoothing:antialiased}
+img{max-width:100%}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px 88px}
+h1,h2,legend{font-family:var(--disp);font-weight:700;text-wrap:balance;margin:0;line-height:1.12}
+a{color:var(--emas);text-underline-offset:3px}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{
+  outline:2px solid var(--emas);outline-offset:2px;border-radius:3px}
+
+.mast{padding:46px 0 26px;border-bottom:2px solid var(--ink)}
+.eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--ink-3);display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.ganti{margin-left:auto;text-transform:none;letter-spacing:.07em}
+h1{font-size:clamp(42px,7.5vw,80px);font-weight:900;letter-spacing:-.04em;margin:14px 0 0}
+h1 em{font-style:normal;color:var(--emas)}
+.lede{max-width:62ch;color:var(--ink-2);font-size:18px;margin:14px 0 0}
+
+.kolom{display:grid;grid-template-columns:minmax(300px,380px) 1fr;gap:34px;margin-top:40px;
+  align-items:start}
+.kolom>*>h2{font-size:22px;letter-spacing:-.02em;border-bottom:1px solid var(--garis);
+  padding-bottom:8px;margin-bottom:16px}
+section{margin-top:50px}
+section>h2{font-size:clamp(21px,3vw,28px);letter-spacing:-.02em;
+  border-bottom:1px solid var(--garis);padding-bottom:8px;margin:0 0 18px}
+
+/* ---- formulir ---- */
+fieldset{border:1px solid var(--garis);border-radius:5px;margin:0 0 16px;padding:8px 16px 16px;
+  background:var(--surface)}
+legend{font-size:12px;font-family:var(--mono);font-weight:500;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-3);padding:0 6px}
+label{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.05em;
+  text-transform:uppercase;color:var(--ink-2);margin:12px 0 4px}
+input,select,textarea{width:100%;font-family:var(--mono);font-size:14px;padding:9px 11px;
+  background:var(--ground);color:var(--ink);border:1px solid var(--garis-2);border-radius:4px}
+input[type=number]{font-variant-numeric:tabular-nums;text-align:right}
+textarea{text-align:left;resize:vertical;line-height:1.5}
+.baris-aksi{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:14px 0 0}
+button{font-family:var(--disp);font-weight:500;font-size:14px;padding:9px 16px;cursor:pointer;
+  background:var(--sunken);color:var(--ink);border:1px solid var(--garis-2);border-radius:4px}
+button:hover{border-color:var(--emas);color:var(--emas)}
+.petunjuk{font-family:var(--mono);font-size:12px;color:var(--ink-3)}
+
+/* ---- papan ---- */
+.vonis{font-family:var(--disp);font-size:17px;font-weight:500;margin:0 0 18px;padding:14px 18px;
+  border-radius:5px;border-left:4px solid var(--ink-3);background:var(--surface)}
+.vonis.v-sehat{border-left-color:var(--laba)}
+.vonis.v-tipis{border-left-color:var(--emas)}
+.vonis.v-rugi{border-left-color:var(--rugi)}
+.ubin-baris{display:grid;grid-template-columns:repeat(auto-fit,minmax(158px,1fr));
+  border-top:1px solid var(--garis);border-left:1px solid var(--garis);margin-bottom:20px}
+.ubin{border-right:1px solid var(--garis);border-bottom:1px solid var(--garis);
+  padding:14px 16px;background:var(--surface);display:flex;flex-direction:column;gap:2px}
+.ubin-l{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--ink-3)}
+.ubin-n{font-family:var(--disp);font-size:25px;font-weight:700;letter-spacing:-.025em;
+  font-variant-numeric:tabular-nums;line-height:1.15;word-break:break-word}
+.ubin-k{font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.ubin.baik .ubin-n{color:var(--laba)}
+.ubin.buruk .ubin-n{color:var(--rugi)}
+
+.grafik{width:100%;height:auto;display:block;margin:0 0 20px;overflow:visible}
+.g-lbl{font-family:var(--mono);font-size:11.5px;fill:var(--ink-2)}
+.g-num{font-family:var(--mono);font-size:12.5px;font-weight:700;fill:var(--ink)}
+.g-bar.b-biasa{fill:var(--emas);opacity:.45}
+.g-bar.b-sibuk{fill:var(--emas);opacity:.75}
+.g-bar.b-buruk{fill:var(--emas)}
+
+/* ---- tabel harga ---- */
+.gulir{overflow-x:auto;border:1px solid var(--garis);border-radius:5px;background:var(--surface)}
+table.harga{width:100%;border-collapse:collapse;font-size:14.5px;min-width:620px}
+table.harga caption{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-3);text-align:left;padding:12px 14px 0}
+table.harga th{background:var(--sunken);font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-2);text-align:left;padding:10px 14px;font-weight:500;
+  border-bottom:1px solid var(--garis-2)}
+table.harga td{padding:11px 14px;border-bottom:1px solid var(--garis);vertical-align:top}
+table.harga td small{color:var(--ink-3);font-size:12px}
+table.harga .num{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums;
+  white-space:nowrap}
+table.harga .tgl{color:var(--ink-3);font-size:12.5px}
+table.harga tr.basi td{background:color-mix(in srgb, var(--rugi) 7%, transparent)}
+.tanda{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--rugi);box-shadow:inset 0 0 0 1px currentColor;border-radius:2px;padding:1px 5px}
+.lain{max-width:74ch;color:var(--ink-2);font-size:15px}
+.tautan-lain{display:flex;gap:16px;flex-wrap:wrap;list-style:none;padding:0;margin:8px 0 0;
+  font-family:var(--mono);font-size:13px}
+
+.catatan{max-width:76ch;color:var(--ink-2);padding-left:20px}
+.catatan li{margin-bottom:12px}
+footer{margin-top:52px;padding-top:20px;border-top:1px solid var(--garis);
+  color:var(--ink-3);font-size:14px;max-width:76ch}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media (max-width:860px){
+  .kolom{grid-template-columns:1fr}
+  .ganti{margin-left:0}
+}

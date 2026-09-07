@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Token Rupiah</title>
+<meta name="description" content="An LLM token cost calculator in Indonesian Rupiah, plus a viability model for AI products: margin, break-even, and how bad a heavy month gets.">
+<meta property="og:title" content="Token Rupiah">
+<meta property="og:description" content="An LLM token cost calculator in Indonesian Rupiah, plus a viability model for AI products: margin, break-even, and how bad a heavy month gets.">
+<link rel="alternate" hreflang="id" href="https://xyb3rpunq.github.io/token-rupiah/">
+<link rel="alternate" hreflang="en" href="https://xyb3rpunq.github.io/token-rupiah/en/">
+<link rel="alternate" hreflang="x-default" href="https://xyb3rpunq.github.io/token-rupiah/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chivo:wght@500;700;900&family=Spectral:wght@400;500&family=Roboto+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="../gaya.css">
+</head>
+<body>
+<div class="wrap">
+
+<header class="mast">
+  <div class="eyebrow">
+    <span>Token cost · margin · break-even · Monte Carlo</span>
+    <a class="ganti" href="../" hreflang="id">Bahasa Indonesia</a>
+  </div>
+  <h1>Token <em>Rupiah</em></h1>
+  <p class="lede">Eighty-eight AI products in the community showcase burn tokens every day, and not one knows its cost per user. Put your own numbers on the left; every change recomputes the whole board. It all runs on your device — nothing is sent anywhere.</p>
+</header>
+
+<div class="kolom">
+
+  <form id="form" class="masukan" autocomplete="off">
+    <h2>Your numbers</h2>
+
+    <fieldset><legend>Model &amp; pricing</legend>
+      <label for="model">Model</label>
+      <select id="model"><option value="claude-opus-5" data-masuk="5" data-keluar="25" data-cache="0.5">Claude Opus 5</option><option value="claude-sonnet-5" data-masuk="2" data-keluar="10" data-cache="0.2">Claude Sonnet 5</option><option value="claude-haiku-4-5" data-masuk="1" data-keluar="5" data-cache="0.1">Claude Haiku 4.5</option><option value="claude-fable-5-1" data-masuk="10" data-keluar="50" data-cache="0.25">Claude Fable 5.1</option><option value="claude-opus-4-8" data-masuk="5" data-keluar="25" data-cache="0.5">Claude Opus 4.8</option><option value="">Enter my own prices</option></select>
+      <label for="hargaMasuk">Input price (USD / 1M tokens)</label><input id="hargaMasuk" type="number" inputmode="decimal" step="0.01" min="0" value="1">
+      <label for="hargaKeluar">Output price (USD / 1M tokens)</label><input id="hargaKeluar" type="number" inputmode="decimal" step="0.01" min="0" value="5">
+      <label for="hargaCache">Cache read price (USD / 1M tokens)</label><input id="hargaCache" type="number" inputmode="decimal" step="0.01" min="0" value="0.1">
+      <label for="kurs">Exchange rate (Rupiah per dollar)</label><input id="kurs" type="number" inputmode="decimal" step="10" min="0" value="16500">
+    </fieldset>
+
+    <fieldset><legend>One request</legend>
+      <label for="tokenMasuk">Input tokens per request</label><input id="tokenMasuk" type="number" inputmode="decimal" step="100" min="0" value="2000">
+      <label for="tokenKeluar">Output tokens per request</label><input id="tokenKeluar" type="number" inputmode="decimal" step="50" min="0" value="500">
+      <label for="tokenCache">Cached tokens per request</label><input id="tokenCache" type="number" inputmode="decimal" step="100" min="0" value="0">
+      <label for="contohTeks">Estimate tokens from a sample</label>
+      <textarea id="contohTeks" rows="3" spellcheck="false"
+        placeholder="Paste one real prompt here to fill in the input-token field."></textarea>
+      <p class="baris-aksi">
+        <button type="button" id="pakaiPerkiraan">Use this estimate</button>
+        <span id="perkiraanToken" class="petunjuk"></span>
+      </p>
+    </fieldset>
+
+    <fieldset><legend>Monthly scale</legend>
+      <label for="pengguna">Paying users</label><input id="pengguna" type="number" inputmode="decimal" step="10" min="0" value="200">
+      <label for="permintaanPerPengguna">Requests per user per month</label><input id="permintaanPerPengguna" type="number" inputmode="decimal" step="5" min="0" value="60">
+      <label for="biayaTetap">Fixed monthly cost (servers, domain, etc.)</label><input id="biayaTetap" type="number" inputmode="decimal" step="100000" min="0" value="1500000">
+    </fieldset>
+
+    <fieldset><legend>The business side</legend>
+      <label for="hargaLangganan">Subscription price per user per month</label><input id="hargaLangganan" type="number" inputmode="decimal" step="1000" min="0" value="49000">
+      <label for="kas">Cash on hand</label><input id="kas" type="number" inputmode="decimal" step="1000000" min="0" value="30000000">
+    </fieldset>
+
+    <fieldset><legend>Usage simulation</legend>
+      <label for="sebaran">Usage skew (0 even, 1.5 very skewed)</label><input id="sebaran" type="number" inputmode="decimal" step="0.1" min="0" value="0.8">
+    </fieldset>
+
+    <p class="baris-aksi"><button type="button" id="setelUlang">Reset to defaults</button></p>
+  </form>
+
+  <section class="hasil" aria-live="polite">
+    <h2>The board</h2>
+    <div id="papan"></div>
+  </section>
+
+</div>
+
+<section id="harga">
+  <h2>Price table</h2>
+  <div class="gulir"><table class="harga">
+    <caption>USD per 1M tokens</caption>
+    <thead><tr>
+      <th>Model</th>
+      <th class="num">Input</th>
+      <th class="num">Output</th>
+      <th class="num">Cache</th>
+      <th class="num">Context</th>
+      <th class="num">Checked</th>
+    </tr></thead>
+    <tbody><tr>
+    <td><b>Claude Opus 5</b><br><small>Anthropic</small></td>
+    <td class="num">$5.00</td>
+    <td class="num">$25.00</td>
+    <td class="num">$0.50</td>
+    <td class="num">1.000K</td>
+    <td class="num tgl">2026-06-24</td>
+  </tr><tr>
+    <td><b>Claude Sonnet 5</b><br><small>Anthropic</small></td>
+    <td class="num">$2.00</td>
+    <td class="num">$10.00</td>
+    <td class="num">$0.20</td>
+    <td class="num">1.000K</td>
+    <td class="num tgl">2026-06-24</td>
+  </tr><tr>
+    <td><b>Claude Haiku 4.5</b><br><small>Anthropic</small></td>
+    <td class="num">$1.00</td>
+    <td class="num">$5.00</td>
+    <td class="num">$0.10</td>
+    <td class="num">200K</td>
+    <td class="num tgl">2026-06-24</td>
+  </tr><tr>
+    <td><b>Claude Fable 5.1</b><br><small>Anthropic</small></td>
+    <td class="num">$10.00</td>
+    <td class="num">$50.00</td>
+    <td class="num">$0.25</td>
+    <td class="num">1.000K</td>
+    <td class="num tgl">2026-06-24</td>
+  </tr><tr>
+    <td><b>Claude Opus 4.8</b><br><small>Anthropic</small></td>
+    <td class="num">$5.00</td>
+    <td class="num">$25.00</td>
+    <td class="num">$0.50</td>
+    <td class="num">1.000K</td>
+    <td class="num tgl">2026-06-24</td>
+  </tr></tbody>
+  </table></div>
+  <p class="lain">Other providers are deliberately left blank here — their prices change several times a year, and a remembered number is more dangerous than an empty column. Open their pricing page, then fill it in under “Enter my own prices”.</p>
+  <ul class="tautan-lain"><li><a href="https://openai.com/api/pricing/" target="_blank" rel="noopener noreferrer">OpenAI</a></li><li><a href="https://ai.google.dev/pricing" target="_blank" rel="noopener noreferrer">Google Gemini</a></li><li><a href="https://api-docs.deepseek.com/quick_start/pricing" target="_blank" rel="noopener noreferrer">DeepSeek</a></li><li><a href="https://groq.com/pricing/" target="_blank" rel="noopener noreferrer">Groq</a></li><li><a href="https://openrouter.ai/models" target="_blank" rel="noopener noreferrer">OpenRouter</a></li></ul>
+</section>
+
+<section id="catatan">
+  <h2>What to know before trusting these numbers</h2>
+  <ul class="catatan">
+    <li>Do not budget on the average. Real usage is skewed: most people use a little, a handful use a great deal. The number to prepare for is p90, not the mean.</li>
+    <li>Estimating tokens from text length is only approximate. Each provider uses a different tokenizer, and Indonesian is more token-hungry than English because its affixes are often split apart. For exact numbers, use the provider’s own token counter — Anthropic offers POST /v1/messages/count_tokens.</li>
+    <li>The price table on this page is dated. If the date looks old, check the official pricing page before making a business decision on it.</li>
+    <li>The self-host comparison only counts GPU rental. The people-hours to run it, idle time, failed experiments, and migration cost are all excluded — and they are usually the expensive part.</li>
+  </ul>
+</section>
+
+<footer><p>The source, the dated price table, and every test live in the repo. No dependencies, no outbound requests, no analytics.</p></footer>
+
+</div>
+<script type="application/json" id="kamus">{"out.perPermintaan":"Cost of one request","out.per1000":"Per 1,000 requests","out.perPengguna":"Token cost per user per month","out.tagihanBulanan":"Bill in a normal month","out.margin":"Margin per user","out.impas":"Users to break even","out.laba":"Monthly profit","out.runway":"Runway","out.bulan":"months","out.pengguna":"users","out.hargaMinimum":"Minimum price to stop losing money per user","out.margin70":"Price for a 70% margin","out.margin80":"Price for an 80% margin","out.p50":"Normal month (p50)","out.p90":"Heavy month (p90)","out.p99":"Worst month (p99)","out.kejutan":"A heavy month costs","out.kaliLipat":"× a normal month","out.takAdaImpas":"never","out.takAdaRunway":"already profitable","vonis.sehat":"Every new user adds profit.","vonis.rugi":"Every new user adds loss. Raise the price, cut usage, or drop to a cheaper model — adding users only digs the hole deeper.","vonis.tipis":"The margin is thin. One heavy month can flip profit into loss."}</script>
+<script type="module" src="../app.js"></script>
+</body>
+</html>

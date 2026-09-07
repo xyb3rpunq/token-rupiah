@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Token Rupiah</title>
+<meta name="description" content="Kalkulator biaya token LLM dalam Rupiah plus simulasi kelayakan produk AI: margin, titik impas, dan kejutan tagihan bulan buruk.">
+<meta property="og:title" content="Token Rupiah">
+<meta property="og:description" content="Kalkulator biaya token LLM dalam Rupiah plus simulasi kelayakan produk AI: margin, titik impas, dan kejutan tagihan bulan buruk.">
+<link rel="alternate" hreflang="id" href="https://xyb3rpunq.github.io/token-rupiah/">
+<link rel="alternate" hreflang="en" href="https://xyb3rpunq.github.io/token-rupiah/en/">
+<link rel="alternate" hreflang="x-default" href="https://xyb3rpunq.github.io/token-rupiah/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chivo:wght@500;700;900&family=Spectral:wght@400;500&family=Roboto+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="./gaya.css">
+</head>
+<body>
+<div class="wrap">
+
+<header class="mast">
+  <div class="eyebrow">
+    <span>Biaya token · margin · titik impas · Monte Carlo</span>
+    <a class="ganti" href="en/" hreflang="en">English</a>
+  </div>
+  <h1>Token <em>Rupiah</em></h1>
+  <p class="lede">Delapan puluh delapan produk AI di showcase komunitas membakar token setiap hari, dan tidak satu pun tahu biaya per penggunanya. Isi angkamu di sebelah kiri; setiap perubahan langsung menghitung ulang seluruh papan. Semuanya jalan di perangkatmu — tidak ada yang dikirim ke mana pun.</p>
+</header>
+
+<div class="kolom">
+
+  <form id="form" class="masukan" autocomplete="off">
+    <h2>Angkamu</h2>
+
+    <fieldset><legend>Model &amp; harga</legend>
+      <label for="model">Model</label>
+      <select id="model"><option value="claude-opus-5" data-masuk="5" data-keluar="25" data-cache="0.5">Claude Opus 5</option><option value="claude-sonnet-5" data-masuk="2" data-keluar="10" data-cache="0.2">Claude Sonnet 5</option><option value="claude-haiku-4-5" data-masuk="1" data-keluar="5" data-cache="0.1">Claude Haiku 4.5</option><option value="claude-fable-5-1" data-masuk="10" data-keluar="50" data-cache="0.25">Claude Fable 5.1</option><option value="claude-opus-4-8" data-masuk="5" data-keluar="25" data-cache="0.5">Claude Opus 4.8</option><option value="">Isi harga sendiri</option></select>
+      <label for="hargaMasuk">Harga masukan (USD / 1 juta token)</label><input id="hargaMasuk" type="number" inputmode="decimal" step="0.01" min="0" value="1">
+      <label for="hargaKeluar">Harga keluaran (USD / 1 juta token)</label><input id="hargaKeluar" type="number" inputmode="decimal" step="0.01" min="0" value="5">
+      <label for="hargaCache">Harga baca cache (USD / 1 juta token)</label><input id="hargaCache" type="number" inputmode="decimal" step="0.01" min="0" value="0.1">
+      <label for="kurs">Kurs (Rupiah per dolar)</label><input id="kurs" type="number" inputmode="decimal" step="10" min="0" value="16500">
+    </fieldset>
+
+    <fieldset><legend>Satu permintaan</legend>
+      <label for="tokenMasuk">Token masukan per permintaan</label><input id="tokenMasuk" type="number" inputmode="decimal" step="100" min="0" value="2000">
+      <label for="tokenKeluar">Token keluaran per permintaan</label><input id="tokenKeluar" type="number" inputmode="decimal" step="50" min="0" value="500">
+      <label for="tokenCache">Token dari cache per permintaan</label><input id="tokenCache" type="number" inputmode="decimal" step="100" min="0" value="0">
+      <label for="contohTeks">Perkirakan token dari contoh teks</label>
+      <textarea id="contohTeks" rows="3" spellcheck="false"
+        placeholder="Tempel satu contoh prompt di sini untuk mengisi kolom token masukan."></textarea>
+      <p class="baris-aksi">
+        <button type="button" id="pakaiPerkiraan">Pakai perkiraannya</button>
+        <span id="perkiraanToken" class="petunjuk"></span>
+      </p>
+    </fieldset>
+
+    <fieldset><legend>Skala bulanan</legend>
+      <label for="pengguna">Jumlah pengguna berbayar</label><input id="pengguna" type="number" inputmode="decimal" step="10" min="0" value="200">
+      <label for="permintaanPerPengguna">Permintaan per pengguna per bulan</label><input id="permintaanPerPengguna" type="number" inputmode="decimal" step="5" min="0" value="60">
+      <label for="biayaTetap">Biaya tetap bulanan (server, domain, dll.)</label><input id="biayaTetap" type="number" inputmode="decimal" step="100000" min="0" value="1500000">
+    </fieldset>
+
+    <fieldset><legend>Sisi bisnis</legend>
+      <label for="hargaLangganan">Harga langganan per pengguna per bulan</label><input id="hargaLangganan" type="number" inputmode="decimal" step="1000" min="0" value="49000">
+      <label for="kas">Uang di tangan</label><input id="kas" type="number" inputmode="decimal" step="1000000" min="0" value="30000000">
+    </fieldset>
+
+    <fieldset><legend>Simulasi pemakaian</legend>
+      <label for="sebaran">Ketimpangan pemakaian (0 rata, 1,5 sangat timpang)</label><input id="sebaran" type="number" inputmode="decimal" step="0.1" min="0" value="0.8">
+    </fieldset>
+
+    <p class="baris-aksi"><button type="button" id="setelUlang">Kembalikan ke bawaan</button></p>
+  </form>
+
+  <section class="hasil" aria-live="polite">
+    <h2>Papan</h2>
+    <div id="papan"></div>
+  </section>
+
+</div>
+
+<section id="harga">
+  <h2>Tabel harga</h2>
+  <div class="gulir"><table class="harga">
+    <caption>USD per 1 juta token</caption>
+    <thead><tr>
+      <th>Model</th>
+      <th class="num">Masuk</th>
+      <th class="num">Keluar</th>
+      <th class="num">Cache</th>
+      <th class="num">Konteks</th>
+      <th class="num">Dicek</th>
+    </tr></thead>
+    <tbody><tr>
+    <td><b>Claude Opus 5</b><br><small>Anthropic</small></td>
+    <td class="num">$5.00</td>
+    <td class="num">$25.00</td>
+    <td class="num">$0.50</td>
+    <td class="num">1.000K</td>
+    <td class="num tgl">2026-06-24</td>
+  </tr><tr>
+    <td><b>Claude Sonnet 5</b><br><small>Anthropic</small></td>
+    <td class="num">$2.00</td>
+    <td class="num">$10.00</td>
+    <td class="num">$0.20</td>
+    <td class="num">1.000K</td>
+    <td class="num tgl">2026-06-24</td>
+  </tr><tr>
+    <td><b>Claude Haiku 4.5</b><br><small>Anthropic</small></td>
+    <td class="num">$1.00</td>
+    <td class="num">$5.00</td>
+    <td class="num">$0.10</td>
+    <td class="num">200K</td>
+    <td class="num tgl">2026-06-24</td>
+  </tr><tr>
+    <td><b>Claude Fable 5.1</b><br><small>Anthropic</small></td>
+    <td class="num">$10.00</td>
+    <td class="num">$50.00</td>
+    <td class="num">$0.25</td>
+    <td class="num">1.000K</td>
+    <td class="num tgl">2026-06-24</td>
+  </tr><tr>
+    <td><b>Claude Opus 4.8</b><br><small>Anthropic</small></td>
+    <td class="num">$5.00</td>
+    <td class="num">$25.00</td>
+    <td class="num">$0.50</td>
+    <td class="num">1.000K</td>
+    <td class="num tgl">2026-06-24</td>
+  </tr></tbody>
+  </table></div>
+  <p class="lain">Penyedia lain sengaja tidak diberi angka di sini — harga mereka berubah beberapa kali setahun dan angka hafalan lebih berbahaya daripada kolom kosong. Buka halaman harganya, lalu isi lewat “Isi harga sendiri”.</p>
+  <ul class="tautan-lain"><li><a href="https://openai.com/api/pricing/" target="_blank" rel="noopener noreferrer">OpenAI</a></li><li><a href="https://ai.google.dev/pricing" target="_blank" rel="noopener noreferrer">Google Gemini</a></li><li><a href="https://api-docs.deepseek.com/quick_start/pricing" target="_blank" rel="noopener noreferrer">DeepSeek</a></li><li><a href="https://groq.com/pricing/" target="_blank" rel="noopener noreferrer">Groq</a></li><li><a href="https://openrouter.ai/models" target="_blank" rel="noopener noreferrer">OpenRouter</a></li></ul>
+</section>
+
+<section id="catatan">
+  <h2>Yang perlu kamu tahu sebelum memakai angka ini</h2>
+  <ul class="catatan">
+    <li>Jangan pakai rata-rata sebagai dasar anggaran. Pemakaian pengguna nyata timpang: sebagian besar memakai sedikit, segelintir memakai sangat banyak. Angka yang perlu kamu siapkan adalah p90, bukan rata-rata.</li>
+    <li>Perkiraan token dari panjang teks hanya kira-kira. Tiap penyedia memakai tokenizer berbeda, dan Bahasa Indonesia lebih boros token daripada Inggris karena imbuhannya sering dipecah. Untuk angka pasti, pakai penghitung token resmi penyedianya — Anthropic menyediakan POST /v1/messages/count_tokens.</li>
+    <li>Tabel harga di halaman ini bertanggal. Kalau tanggalnya sudah lama, cek langsung ke halaman harga resminya sebelum mengambil keputusan bisnis.</li>
+    <li>Perbandingan self-host hanya menghitung sewa GPU-nya. Waktu orang yang mengurusnya, jam menganggur, percobaan yang gagal, dan biaya pindah tidak masuk hitungan — dan biasanya justru itu yang paling mahal.</li>
+  </ul>
+</section>
+
+<footer><p>Kode sumber, tabel harga bertanggal, dan seluruh ujinya ada di repo. Nol dependensi, nol permintaan jaringan keluar, nol analitik.</p></footer>
+
+</div>
+<script type="application/json" id="kamus">{"out.perPermintaan":"Biaya satu permintaan","out.per1000":"Per 1.000 permintaan","out.perPengguna":"Biaya token per pengguna per bulan","out.tagihanBulanan":"Tagihan bulan biasa","out.margin":"Margin per pengguna","out.impas":"Pengguna untuk balik modal","out.laba":"Laba bulanan","out.runway":"Uang bertahan","out.bulan":"bulan","out.pengguna":"pengguna","out.hargaMinimum":"Harga minimum agar tidak rugi per pengguna","out.margin70":"Harga untuk margin 70%","out.margin80":"Harga untuk margin 80%","out.p50":"Bulan biasa (p50)","out.p90":"Bulan sibuk (p90)","out.p99":"Bulan terburuk (p99)","out.kejutan":"Bulan sibuk semahal","out.kaliLipat":"× bulan biasa","out.takAdaImpas":"tidak pernah","out.takAdaRunway":"sudah untung","vonis.sehat":"Tiap pengguna baru menambah untung.","vonis.rugi":"Tiap pengguna baru menambah rugi. Naikkan harga, tekan pemakaian, atau turunkan kelas model — menambah pengguna hanya memperbesar lubangnya.","vonis.tipis":"Marginnya tipis. Satu bulan sibuk bisa membalik untung jadi rugi."}</script>
+<script type="module" src="./app.js"></script>
+</body>
+</html>
